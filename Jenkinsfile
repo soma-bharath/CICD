@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: GITHUB_CRED, url: 'https://github.com/soma-bharath/CICD.git']]])
+                    git branch: 'main', credentialsId: 'githubcred', url: 'https://github.com/soma-bharath/CICD.git'
                 }
             }
         }
