@@ -16,11 +16,21 @@ pipeline {
             }
         }
 
-        stage('Build and Push Docker Image') {
+        stage('Build Docker Image') {
             steps {
                 script {
                     def customImage = docker.build("${DOCKER_REPO}:${BUILD_NUMBER}", "-f Dockerfile .")
-                    customImage.push()
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKER_CRED') {
+                        def customImage = docker.image("${DOCKER_REPO}:${BUILD_NUMBER}")
+                        customImage.push()
+                    }
                 }
             }
         }
