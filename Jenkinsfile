@@ -37,9 +37,13 @@ pipeline {
         stage('create a conatiner'){
             steps{
                 sh """\
-        docker run -dit -p 911:80 ${DOCKER_REPO}:${BUILD_NUMBER}
+        docker run -dit -p ${BUILD_NUMBER}:80 ${DOCKER_REPO}:${BUILD_NUMBER}
         """
             }
+        }
+            stage('Trigger ManifestUpdate') {
+                echo "triggering updatemanifestjob"
+                build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
         }
     }
 }
