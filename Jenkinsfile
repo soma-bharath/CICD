@@ -34,5 +34,10 @@ pipeline {
                 }
             }
         }
+        stage('create a conatiner'){
+            steps{
+                sh "sudo docker run -dit -p 911:80 "${DOCKER_REPO}:${BUILD_NUMBER}"
+            }
+        }
     }
 }
