@@ -27,7 +27,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKER_CRED') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'DockerCred') {
                         def customImage = docker.image("${DOCKER_REPO}:${BUILD_NUMBER}")
                         customImage.push()
                     }
